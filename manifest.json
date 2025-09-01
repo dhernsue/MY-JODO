@@ -5,15 +5,15 @@
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#0f172a",
-  "description": "MY JODO एक यूनिक और colorful calculator है, जो basic arithmetic और unit conversion करता है।",
+  "description": "MY JODO एक यूनिक और colorful calculator है, जो basic arithmetic और unit conversion करता है",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icon-512.png",
+      "src": "512.png",
       "sizes": "512x512",
       "type": "image/png"
     }

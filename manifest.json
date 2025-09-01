@@ -1,8 +1,10 @@
 {
   "name": "MY JODO Calculator",
   "short_name": "MY JODO",
-  "start_url": "./index.html",
+  "start_url": ".",
+  "scope": ".",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#000000",
   "theme_color": "#0f172a",
   "description": "MY JODO एक यूनिक और colorful calculator है, जो basic arithmetic और unit conversion करता है",

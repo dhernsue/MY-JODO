@@ -1,145 +1,205 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MY JODO • Calculator</title>
-
-  <!-- Manifest file link -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MY JODO Calculator</title>
   <link rel="manifest" href="manifest.json">
-
   <style>
-    :root{
-      --bg:#0f172a;
-      --key:#1f2937;
-      --ok:#22c55e;
-      --danger:#ef4444;
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      width: 100vw;
+      background: #0f172a;
+      color: #fff;
+      font-family: Arial, sans-serif;
     }
-    *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,Segoe UI,Roboto,Arial}
-    body{height:100vh;display:flex;justify-content:center;align-items:center;background:#1e1b4b}
-    .app{width:100%;height:100%;background:#111;padding:14px;display:flex;flex-direction:column;gap:12px;}
-    .total{background:#000;padding:20px;border-radius:18px;font-size:22px;font-weight:bold;line-height:1.5em;
-      box-shadow:inset 0 0 15px rgba(0,255,255,0.15);min-height:90px}
-    .total .title{color:#fff;font-size:22px;display:block;margin-bottom:6px;}
-    .total .meter{color:#00ffff;display:block;font-size:20px;}
-    .total .inch{color:#00ff00;display:block;font-size:20px;}
-    .total .num{color:#fff;font-weight:bold;}
-    .tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-    .tab{padding:14px;font-weight:600;border-radius:12px;border:0;color:#fff;background:#333;
-      transition:0.25s;font-size:16px}
-    .tab.active{background:linear-gradient(45deg,#00f6ff,#0066ff)}
-    .display{background:#000;padding:16px;border-radius:12px;min-height:80px;display:flex;
-      flex-direction:column;justify-content:center;box-shadow:inset 0 0 12px rgba(255,255,255,0.08);}
-    .trail{color:#ccc;font-size:18px;overflow:hidden;text-overflow:ellipsis;}
-    .value{font-size:36px;font-weight:bold;color:#fff}
-    .pad{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;align-content:start}
-    .key{border:0;padding:20px;font-size:22px;font-weight:bold;border-radius:14px;
-      background:var(--key);color:#fff;transition:0.25s}
-    .key.ok{background:linear-gradient(45deg,#00ff6c,#00d0ff)}
-    .key.danger{background:linear-gradient(45deg,#ff1466,#ff4d2b)}
-    .key:active{transform:scale(0.9);box-shadow:0 0 20px #0f0,0 0 40px #0ff;}
+
+    .app {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 14px;
+      box-sizing: border-box;
+      gap: 12px;
+    }
+
+    .display {
+      background: #000;
+      padding: 20px;
+      border-radius: 12px;
+      font-size: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .display span {
+      font-weight: bold;
+    }
+
+    .units {
+      display: flex;
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    .units button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background: #333;
+      color: #fff;
+      font-size: 16px;
+    }
+
+    .units button.active {
+      background: #2563eb;
+    }
+
+    .buttons {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .buttons button {
+      font-size: 18px;
+      padding: 18px;
+      border: none;
+      border-radius: 10px;
+      background: #1e293b;
+      color: white;
+    }
+
+    .buttons button.ac {
+      background: #f43f5e;
+      color: #fff;
+    }
+
+    .buttons button.ok {
+      background: linear-gradient(45deg, #22c55e, #06b6d4);
+      color: #fff;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
-<div class="app">
+  <div class="app">
+    <div class="display">
+      <div><span>Total</span></div>
+      <div><span style="color:cyan;">Meter:</span> <span id="meter">0</span></div>
+      <div><span style="color:lime;">Inch:</span> <span id="inch">0</span></div>
+      <div id="expression">0</div>
+    </div>
 
-  <!-- TOTAL Screen -->
-  <div class="total" id="total">
-    <span class="title">TOTAL</span>
-    <span class="meter">Meter: <span class="num">0</span></span>
-    <span class="inch">Inch: <span class="num">0</span></span>
+    <div class="units">
+      <button class="unit-btn active" data-unit="mm">mm</button>
+      <button class="unit-btn" data-unit="inch">Inch</button>
+      <button class="unit-btn" data-unit="foot">Foot</button>
+      <button class="unit-btn" data-unit="meter">Meter</button>
+    </div>
+
+    <div class="buttons">
+      <button class="ac">AC</button>
+      <button data-op="*">×</button>
+      <button data-op="/">÷</button>
+      <button data-op="-">-</button>
+      <button data-num="7">7</button>
+      <button data-num="8">8</button>
+      <button data-num="9">9</button>
+      <button data-op="+">+</button>
+      <button data-num="4">4</button>
+      <button data-num="5">5</button>
+      <button data-num="6">6</button>
+      <button id="equals">=</button>
+      <button data-num="1">1</button>
+      <button data-num="2">2</button>
+      <button data-num="3">3</button>
+      <button class="ok">OK</button>
+      <button data-num="0">0</button>
+      <button data-num=".">.</button>
+    </div>
   </div>
 
-  <!-- Tabs -->
-  <div class="tabs">
-    <button class="tab active" data-unit="mm">mm</button>
-    <button class="tab" data-unit="inch">Inch</button>
-    <button class="tab" data-unit="foot">Foot</button>
-    <button class="tab" data-unit="meter">Meter</button>
-  </div>
+  <script>
+    const expressionEl = document.getElementById("expression");
+    const meterEl = document.getElementById("meter");
+    const inchEl = document.getElementById("inch");
 
-  <!-- Display -->
-  <div class="display">
-    <div class="trail" id="trail">0</div>
-    <div class="value" id="value">0</div>
-  </div>
+    let expression = "";
+    let currentUnit = "mm";
 
-  <!-- Keypad -->
-  <div class="pad">
-    <button class="key danger" data-act="ac">AC</button>
-    <button class="key" data-act="mul">×</button>
-    <button class="key" data-act="div">÷</button>
-    <button class="key" data-act="sub">-</button>
-
-    <button class="key" data-num="7">7</button>
-    <button class="key" data-num="8">8</button>
-    <button class="key" data-num="9">9</button>
-    <button class="key" data-act="add">+</button>
-
-    <button class="key" data-num="4">4</button>
-    <button class="key" data-num="5">5</button>
-    <button class="key" data-num="6">6</button>
-    <button class="key" data-act="eq">=</button>
-
-    <button class="key" data-num="1">1</button>
-    <button class="key" data-num="2">2</button>
-    <button class="key" data-num="3">3</button>
-    <button class="key ok" data-act="ok">OK</button>
-
-    <button class="key" data-num="0">0</button>
-    <button class="key" data-num=".">.</button>
-  </div>
-</div>
-
-<script>
-  let value = document.getElementById("value");
-  let trail = document.getElementById("trail");
-  let totalMeter = document.querySelector(".total .meter .num");
-  let totalInch = document.querySelector(".total .inch .num");
-  let unit = "mm";
-  let current = "";
-
-  document.querySelectorAll(".tab").forEach(tab=>{
-    tab.addEventListener("click",()=>{
-      document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-      tab.classList.add("active");
-      unit = tab.dataset.unit;
+    // Numbers
+    document.querySelectorAll("[data-num]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        expression += btn.dataset.num;
+        updateDisplay();
+      });
     });
-  });
 
-  document.querySelectorAll(".key").forEach(key=>{
-    key.addEventListener("click",()=>{
-      let act = key.dataset.act;
-      let num = key.dataset.num;
-      if(num!==undefined){
-        current += num;
-        value.textContent = current;
-        trail.textContent = current;
-      } else if(act==="ac"){
-        current="";
-        value.textContent="0";
-        trail.textContent="0";
-        totalMeter.textContent="0";
-        totalInch.textContent="0";
-      } else if(act==="eq" || act==="ok"){
-        let val=parseFloat(current)||0;
-        if(unit==="mm"){
-          totalMeter.textContent=(val/1000).toFixed(2);
-          totalInch.textContent=(val/25.4).toFixed(2);
-        } else if(unit==="inch"){
-          totalMeter.textContent=(val*0.0254).toFixed(2);
-          totalInch.textContent=val.toFixed(2);
-        } else if(unit==="foot"){
-          totalMeter.textContent=(val*0.3048).toFixed(2);
-          totalInch.textContent=(val*12).toFixed(2);
-        } else if(unit==="meter"){
-          totalMeter.textContent=val.toFixed(2);
-          totalInch.textContent=(val/0.0254).toFixed(2);
-        }
-        current="";
+    // Operators
+    document.querySelectorAll("[data-op]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        if (expression === "") return;
+        expression += " " + btn.dataset.op + " ";
+        updateDisplay();
+      });
+    });
+
+    // Clear
+    document.querySelector(".ac").addEventListener("click", () => {
+      expression = "";
+      updateDisplay();
+      meterEl.textContent = 0;
+      inchEl.textContent = 0;
+    });
+
+    // Equals
+    document.getElementById("equals").addEventListener("click", () => {
+      try {
+        expression = eval(expression).toString();
+        updateDisplay();
+      } catch {
+        expression = "Error";
+        updateDisplay();
       }
     });
-  });
-</script>
+
+    // OK button → convert
+    document.querySelector(".ok").addEventListener("click", () => {
+      let value = parseFloat(expression);
+      if (isNaN(value)) return;
+
+      let meters = 0;
+      if (currentUnit === "mm") meters = value / 1000;
+      if (currentUnit === "inch") meters = value * 0.0254;
+      if (currentUnit === "foot") meters = value * 0.3048;
+      if (currentUnit === "meter") meters = value;
+
+      let inches = meters / 0.0254;
+
+      meterEl.textContent = meters.toFixed(4);
+      inchEl.textContent = inches.toFixed(2);
+    });
+
+    // Unit buttons
+    document.querySelectorAll(".unit-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".unit-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentUnit = btn.dataset.unit;
+      });
+    });
+
+    function updateDisplay() {
+      expressionEl.textContent = expression || "0";
+    }
+  </script>
 </body>
 </html>
